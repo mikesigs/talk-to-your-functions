@@ -9,7 +9,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Util.fs"/>
-    <Compile Include="DialogFlow.fs"/>
+    <Compile Include="Model.fs"/>
     <Compile Include="BirthdayGreeting.fs"/>
   </ItemGroup>
   <ItemGroup>

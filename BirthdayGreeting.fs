@@ -4,7 +4,7 @@ open Microsoft.Azure.WebJobs
 open Microsoft.AspNetCore.Http
 open Microsoft.AspNetCore.Mvc
 open Microsoft.Azure.WebJobs.Host
-open DialogFlow
+open Model
 open Newtonsoft.Json
 open System.IO
 open Util
@@ -12,7 +12,10 @@ open Util
 module BirthdayGreeting =
         
     [<FunctionName("BirthdayGreeting")>]
-    let run([<HttpTrigger(Extensions.Http.AuthorizationLevel.Anonymous, "post", Route = null)>]req: HttpRequest, log: TraceWriter) =
+    let run 
+        ([<HttpTrigger(Extensions.Http.AuthorizationLevel.Anonymous, "post", Route = null)>] 
+         req: HttpRequest, 
+         log: TraceWriter) =
         log.Info("BirthdayGreeting is processing a request.")
         async {
             try
@@ -29,13 +32,7 @@ module BirthdayGreeting =
                 let greeting = getGreeting givenName birthdate
                 log.Info(sprintf "Responding with greeting: %s" greeting)
 
-                let result = 
-                    { payload = 
-                        { google = 
-                            { richResponse = 
-                                { items = 
-                                    [{ simpleResponse = 
-                                        { textToSpeech = greeting }}]}}}}
+                let result = createDialogFlowResponse greeting
                 
                 return JsonResult result :> IActionResult
 

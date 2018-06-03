@@ -1,7 +1,7 @@
 namespace TalkToYourFunctions
 
 open Newtonsoft.Json.Serialization
-module DialogFlow =
+module Model =
 
     type QueryParameters = {
         ``given-name``: string
@@ -41,3 +41,11 @@ module DialogFlow =
     type DialogFlowResponse = {
         payload: Payload
     }
+
+    let createDialogFlowResponse response =
+        { payload = 
+            { google = 
+                { richResponse = 
+                    { items = 
+                        [{ simpleResponse = 
+                            { textToSpeech = response }}]}}}}

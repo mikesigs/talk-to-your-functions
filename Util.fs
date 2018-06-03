@@ -30,38 +30,33 @@ module Util =
         |> Seq.filter id
         |> Seq.length
 
-    let isLeapYearBaby (birthdate: DateTime) = 
-        DateTime.IsLeapYear birthdate.Year && 
-        birthdate.Month = 2 && 
+    let isLeapYearBaby (birthdate: DateTime) =
+        DateTime.IsLeapYear birthdate.Year &&
+        birthdate.Month = 2 &&
         birthdate.Day = 29
 
-    let isBirthday (birthdate: DateTime) = 
+    let isBirthday (birthdate: DateTime) =
         let today = DateTime.Today
         birthdate.Month = today.Month && birthdate.Day = today.Day
 
-    let isBelated (birthdate: DateTime) = 
+    let birthdateForYear (year: int) (birthdate : DateTime) =
+        if (birthdate.Month = 2 && birthdate.Day = 29 && not (DateTime.IsLeapYear year)) then
+            DateTime(year, 3, 1) // Leap year birthday
+        else
+            DateTime(year, birthdate.Month, birthdate.Day)
+
+
+    let isBelated (birthdate: DateTime) =
+        let tolerance = 150.0
         let today = DateTime.Today
-        let tolerance = 150.0;
+        let thisYear = today.Year
+        let lastYear = thisYear - 1
 
-        // calculate today - 60 days
-        // check if thisYearsBirthdate is after this day but before today
-        // check if lastYearsBirthdate is after this day but before today
+        let thisYearsBirthdate = birthdateForYear thisYear birthdate
+        let lastYearsBirthdate = birthdateForYear lastYear birthdate
 
-        let thisYearsBirthdate =
-            if (birthdate.Month = 2 && birthdate.Day = 29 && not (DateTime.IsLeapYear today.Year)) then
-                DateTime(today.Year, 3, 1) // Leap year birthday
-            else
-                DateTime(today.Year, birthdate.Month, birthdate.Day)
-                
-        let lastYearsBirthdate =
-            let lastYear = today.Year - 1
-            if (birthdate.Month = 2 && birthdate.Day = 29 && not (DateTime.IsLeapYear lastYear)) then
-                DateTime(lastYear, 3, 1) // Leap year birthday
-            else
-                DateTime(lastYear, birthdate.Month, birthdate.Day)
-
-        (thisYearsBirthdate > (today.AddDays(-tolerance)) && thisYearsBirthdate < today) ||
-        (lastYearsBirthdate > (today.AddDays(-tolerance)) && lastYearsBirthdate < today)
+        today.AddDays(-tolerance) < thisYearsBirthdate && thisYearsBirthdate < today ||
+        today.AddDays(-tolerance) < lastYearsBirthdate && lastYearsBirthdate < today
 
     let getGreeting givenName birthdate =
         let age = getAge birthdate
@@ -69,7 +64,7 @@ module Util =
             if (age > 0) then
                 sprintf "%d%s " age (ordinal age)
             else ""
-        
+
         let msg =
             if (isBirthday birthdate) then
                 sprintf "Happy %sbirthday %s!!" ageStr givenName
@@ -80,7 +75,7 @@ module Util =
 
         if (isLeapYearBaby birthdate) then
             let leapAge = getLeapAge birthdate
-            let leapAgeStr = 
+            let leapAgeStr =
                 if (leapAge > 0) then
                     sprintf "You turn what, %d this year? Just kidding. Anyways... " leapAge
                 else ""
