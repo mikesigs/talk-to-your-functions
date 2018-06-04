@@ -38,5 +38,5 @@ You will need to have the following installed to run this code:
 
 1. Run the Function App by pressing F5 in VS Code
 2. Run `ngrok http 7071`
-3. Configure the fulfillment URL in DialogFlow to use your ngrok https URL (or deployed Azure URL), followed by the function route `/api/BirthdayGreeting`
+3. Configure the fulfillment URL in DialogFlow to use your ngrok **https URL**, followed by the function route `/api/BirthdayGreeting`
 4. Use the Google Assistant test console in DialogFlow to test the app
