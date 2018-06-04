@@ -3,7 +3,7 @@
   "tasks": [
     {
       "label": "clean",
-      "command": "dotnet clean",
+      "command": "dotnet clean ./src",
       "type": "shell",
       "presentation": {
         "reveal": "always"
@@ -12,7 +12,7 @@
     },
     {
       "label": "build",
-      "command": "dotnet build",
+      "command": "dotnet build ./src",
       "type": "shell",
       "dependsOn": "clean",
       "group": {
@@ -30,7 +30,7 @@
       "type": "shell",
       "dependsOn": "build",
       "options": {
-        "cwd": "${workspaceFolder}/bin/Debug/netstandard2.0"
+        "cwd": "${workspaceFolder}/src/bin/Debug/netstandard2.0"
       },
       "command": "func host start",
       "isBackground": true,
