@@ -34,7 +34,6 @@ You will need to have the following installed to run this code:
 3. Click on **Export and Import**
 4. Click on **Import From Zip** and follow the instructions
 
----
 
 ### Run the app
 
