@@ -2,15 +2,12 @@
 
 ## How to build chatbots with DialogFlow, Azure Functions, and F#
 
----
 
 This repository is related to a presentation I gave at the 2018 [Prairie Dev Conn](https://www.prairiedevconn/) in Winnipeg, MB, Canada.
 
 The slides can be found at <https://slides.com/mikesigs/talk-to-your-functions/>
 
 Here you will find both the source code for an Azure Function App, as well as the exported zip file of the related DialogFlow agent.
-
----
 
 ### Prerequisites
 
@@ -22,15 +19,13 @@ You will need to have the following installed to run this code:
 - Visual Studio Code
 - ngrok
 
----
+### Breakdown
 
-## Breakdown
-
-### Azure Function App
+#### Azure Function App
 
  In the `src` folder you will find the the Azure Function App. It is written in F#, and acts as the fulfillment logic for a DialogFlow agent.
 
-### DialogFlow Agent
+#### DialogFlow Agent
 
  You can create the DialogFlow agent for yourself by importing `DialogFlowAgent.zip` using the DialogFlow Console.
 
@@ -41,7 +36,7 @@ You will need to have the following installed to run this code:
 
 ---
 
-## Run the app
+### Run the app
 
 1. Run the Function App locally by pressing F5
 2. Run `ngrok http 7071` (alternatively you could just publish the Function App to Azure)
